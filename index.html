@@ -12,29 +12,26 @@
   <main id="app" class="main">
     <h1 class="title">Trello</h1>
     <div class="board">
-      
-      <div class="list">
-        <div class="list-header">
-          <h2 class="list-title">To Do</h2>
-          <button class="list-button">+</button>
-        </div>
-        <div class="card">
-          <div class="card-action">
-            <select class="card-action-select">
-              <optgroup label="Move to:">
-                <option>To Do</option>
-                <option>Doing</option>
-                <option>Done</option>
-              </optgroup>
-            </select>
-            <button class="card-action-button">&times;</button>
-          </div>
-          <textarea class="card-text"></textarea>
-        </div>
-      </div>
-    
+      <trello-list 
+        v-for="list in lists"
+        :list="list"
+        @create-card="createCard"
+        >
+        <trello-card 
+          v-for="card in getCards(list)"
+          :key="card.id"
+          :lists="lists"
+          :id="card.id"
+          :initial-list="card.list"
+          :initial-text="card.text"
+          @update-list="updateList"
+          @update-text="updateText"
+          @delete-card="deleteCard">
+        </trello-card>
+      </trello-list>
     </div>
   </main>
+
   <script src="app.js"></script>
 </body>
 </html>
